@@ -19,6 +19,7 @@ public class CloudGatewayConfig {
         return routeLocatorBuilder.routes()
                 .route(p -> p
                         .path("/customers/**")
+                        .filters(f -> f.circuitBreaker(c->c.setName("codedTribeCB").setFallbackUri("/customerServiceFallBack")))
                         .uri("lb://CUSTOMER-SERVICE"))
                 .route(p -> p
                         .path("/order/**")
